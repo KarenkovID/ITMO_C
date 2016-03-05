@@ -2,7 +2,7 @@
 // Created by Игорь on 05.03.2016.
 //
 
-//#ifndef MYRATIONAL_RATIONAL_H
+#ifndef MYRATIONAL_RATIONAL_H
 #define MYRATIONAL_RATIONAL_H
 
 
@@ -30,4 +30,4 @@ private:
 
 };
 
-//#endif //MYRATIONAL_RATIONAL_H
+#endif MYRATIONAL_RATIONAL_H
