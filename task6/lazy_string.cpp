@@ -39,7 +39,7 @@ char lazy_string::at(unsigned pos) {
     if (pos >= length) {
         throw std::out_of_range("lazy_string");
     }
-    return shp_data_s->at(pos);
+    return shp_data_s->at(begin + pos);
 }
 
 char lazy_string::operator[](unsigned pos) {
