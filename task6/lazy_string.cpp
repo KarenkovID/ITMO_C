@@ -35,14 +35,25 @@ std::ostream &operator<<(std::ostream &os, lazy_string &ls) {
     return os;
 }
 
-char lazy_string::at(unsigned pos) const{
+const char &lazy_string::at(unsigned pos) const{
     if (pos >= length) {
         throw std::out_of_range("lazy_string");
     }
     return shp_data_s->at(begin + pos);
 }
 
-char lazy_string::operator[](unsigned pos) const{
+char &lazy_string::at(unsigned pos) {
+    if (pos >= length) {
+        throw std::out_of_range("lazy_string");
+    }
+    return shp_data_s->at(begin + pos);
+}
+
+const char &lazy_string::operator[](unsigned pos) const{
+    return at(pos);
+}
+
+char &lazy_string::operator[](unsigned pos){
     return at(pos);
 }
 

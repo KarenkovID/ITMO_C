@@ -37,13 +37,15 @@ public:
      * @return character at the position pos (pos = 0..length - 1)
      * @trows std::out_of_range if pos >= length
      */
-    char operator[](unsigned pos) const;
+    const char &operator[](unsigned pos) const;
+    char &operator[](unsigned pos);
 
     /**
      * @return character at the position pos (pos = 0..length - 1)
      * @trows std::out_of_range if pos >= length
      */
-    char at(unsigned pos) const;
+    const char &at(unsigned pos) const;
+    char &at(unsigned pos) ;
 
     /*
      * Extracts a string from the input stream is, storing the sequence in lazy_string,
