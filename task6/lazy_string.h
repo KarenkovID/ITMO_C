@@ -23,9 +23,9 @@ private:
     private:
 
         lazy_string *const ls;
-        unsigned pos;
+        size_t pos;
     public:
-        my_char(lazy_string *const ls, unsigned pos);
+        my_char(lazy_string *const ls, size_t pos);
         my_char &operator=(char ch);
         my_char &operator=(my_char my_ch);
         operator char() const;
@@ -47,7 +47,7 @@ public:
      * new_ls is substring(characters from begin to begin + length - 1 including) this.
      * @throws @throws  std::out_of_range if begin > size()
      */
-    lazy_string substr(unsigned begin = 0, unsigned length = std::string::npos) const;
+    lazy_string substr(size_t begin = 0, size_t length = std::string::npos) const;
     /**
      * @return  std::string containing a copy of the characters of the lazy_string.
      */
@@ -56,15 +56,15 @@ public:
      * @return character at the position pos (pos = 0..length - 1)
      * @trows std::out_of_range if pos >= length
      */
-    char operator[](unsigned pos) const;
-    my_char operator[](unsigned pos);
+    char operator[](size_t pos) const;
+    my_char operator[](size_t pos);
 
     /**
      * @return character at the position pos (pos = 0..length - 1)
      * @trows std::out_of_range if pos >= length
      */
-    char at(unsigned pos) const;
-    my_char at(unsigned pos) ;
+    char at(size_t pos) const;
+    my_char at(size_t pos) ;
 
     /*
      * Extracts a string from the input stream is, storing the sequence in lazy_string,
@@ -80,7 +80,7 @@ public:
     /**
      * @return length of ls
      */
-    unsigned get_length();
+    size_t get_length();
 
 };
 
