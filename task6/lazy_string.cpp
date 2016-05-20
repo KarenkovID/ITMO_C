@@ -14,7 +14,7 @@ lazy_string::lazy_string():
         shp_data_s(std::make_shared<std::string>(std::string())),
         begin(0),
         length(0){}
-lazy_string lazy_string::substr(unsigned begin, unsigned length) {
+lazy_string lazy_string::substr(unsigned begin, unsigned length) const{
     if (begin >= this->length || begin + length > this->length) {
         throw std::out_of_range("lazy_string");
     }
@@ -35,18 +35,18 @@ std::ostream &operator<<(std::ostream &os, lazy_string &ls) {
     return os;
 }
 
-char lazy_string::at(unsigned pos) {
+char lazy_string::at(unsigned pos) const{
     if (pos >= length) {
         throw std::out_of_range("lazy_string");
     }
     return shp_data_s->at(begin + pos);
 }
 
-char lazy_string::operator[](unsigned pos) {
+char lazy_string::operator[](unsigned pos) const{
     return at(pos);
 }
 
-lazy_string::operator std::string() {
+lazy_string::operator std::string() const{
     return shp_data_s->substr(begin, length);
 }
 unsigned lazy_string::get_length() {

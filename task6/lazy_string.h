@@ -28,22 +28,22 @@ public:
      * new_ls is substring(characters from begin to begin + length - 1 including) this.
      * @throws @throws  std::out_of_range if begin > size() || begin + length > this.length
      */
-    lazy_string substr(unsigned begin, unsigned length);
+    lazy_string substr(unsigned begin, unsigned length) const;
     /**
      * @return  std::string containing a copy of the characters of the lazy_string.
      */
-    operator std::string();
+    operator std::string() const;
     /**
      * @return character at the position pos (pos = 0..length - 1)
      * @trows std::out_of_range if pos >= length
      */
-    char operator[](unsigned pos);
+    char operator[](unsigned pos) const;
 
     /**
      * @return character at the position pos (pos = 0..length - 1)
      * @trows std::out_of_range if pos >= length
      */
-    char at(unsigned pos);
+    char at(unsigned pos) const;
 
     /*
      * Extracts a string from the input stream is, storing the sequence in lazy_string,
