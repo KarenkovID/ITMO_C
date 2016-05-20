@@ -10,6 +10,8 @@ int main() {
     cout << ls1 << endl;
 
     cin >> ls1;
+    ls1 = ls1.substr(2, 4);
+    cout << ls1 << endl;
     ls1 = ls1.substr(2, 2);
     cout << ls1;
     return 0;

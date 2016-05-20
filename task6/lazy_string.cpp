@@ -18,7 +18,7 @@ lazy_string lazy_string::substr(unsigned begin, unsigned length) {
     if (begin >= this->length || begin + length > this->length) {
         throw std::out_of_range("lazy_string");
     }
-    return lazy_string(shp_data_s, begin, length);
+    return lazy_string(shp_data_s, this->begin + begin, length);
 }
 
 std::istream &operator>>(std::istream &is, lazy_string &ls) {
@@ -39,7 +39,7 @@ char lazy_string::at(unsigned pos) {
     if (pos >= length) {
         throw std::out_of_range("lazy_string");
     }
-    return shp_data_s->at(pos);
+    return shp_data_s->at(begin + pos);
 }
 
 char lazy_string::operator[](unsigned pos) {
@@ -48,4 +48,7 @@ char lazy_string::operator[](unsigned pos) {
 
 lazy_string::operator std::string() {
     return shp_data_s->substr(begin, length);
+}
+unsigned lazy_string::get_length() {
+    return length;
 }
