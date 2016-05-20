@@ -4,11 +4,11 @@
 using namespace std;
 
 int main() {
-    const string str = "sdfgsdfg";
-    lazy_string ls(str);
-    cout << ls[0] << endl;
-    lazy_string ls1 = ls.substr(0, 2);
-    cout << ls1 << endl;
+    lazy_string ls("kek\n");
+    cout << ls << endl;
+    lazy_string s = ls.substr(1);
 
+    ls[0] = ls[2] = 'l';
+    cout << ls;
     return 0;
 }

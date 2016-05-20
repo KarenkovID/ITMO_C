@@ -12,6 +12,25 @@
  * The lazy_string class implements Copy-on-Write string
  */
 class lazy_string {
+private:
+    std::shared_ptr<std::string> shp_data_s;
+    size_t begin, length;
+
+    lazy_string(std::shared_ptr<std::string> shp_str, size_t begin, size_t length);
+
+    class my_char {
+        friend class lazy_string;
+    private:
+
+        lazy_string *const ls;
+        unsigned pos;
+    public:
+        my_char(lazy_string *const ls, unsigned pos);
+        my_char &operator=(char ch);
+        my_char &operator=(my_char my_ch);
+        operator char() const;
+    };
+
 public:
     /**
      *  create new lazy_string. Characters like in str
@@ -26,9 +45,9 @@ public:
     /**
      * @return new lazy_string new_ls.
      * new_ls is substring(characters from begin to begin + length - 1 including) this.
-     * @throws @throws  std::out_of_range if begin > size() || begin + length > this.length
+     * @throws @throws  std::out_of_range if begin > size()
      */
-    lazy_string substr(unsigned begin, unsigned length) const;
+    lazy_string substr(unsigned begin = 0, unsigned length = std::string::npos) const;
     /**
      * @return  std::string containing a copy of the characters of the lazy_string.
      */
@@ -37,15 +56,15 @@ public:
      * @return character at the position pos (pos = 0..length - 1)
      * @trows std::out_of_range if pos >= length
      */
-    const char &operator[](unsigned pos) const;
-    char &operator[](unsigned pos);
+    char operator[](unsigned pos) const;
+    my_char operator[](unsigned pos);
 
     /**
      * @return character at the position pos (pos = 0..length - 1)
      * @trows std::out_of_range if pos >= length
      */
-    const char &at(unsigned pos) const;
-    char &at(unsigned pos) ;
+    char at(unsigned pos) const;
+    my_char at(unsigned pos) ;
 
     /*
      * Extracts a string from the input stream is, storing the sequence in lazy_string,
@@ -63,11 +82,6 @@ public:
      */
     unsigned get_length();
 
-private:
-    std::shared_ptr<std::string> shp_data_s;
-    size_t begin, length;
-
-    lazy_string(std::shared_ptr<std::string> shp_str, size_t begin, size_t length);
 };
 
 #endif //LAZY_STIRNG_LAZY_STRING_H

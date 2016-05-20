@@ -15,9 +15,10 @@ lazy_string::lazy_string():
         begin(0),
         length(0){}
 lazy_string lazy_string::substr(unsigned begin, unsigned length) const{
-    if (begin >= this->length || begin + length > this->length) {
+    if (begin >= this->length) {
         throw std::out_of_range("lazy_string");
     }
+    length = std::min(length, this->length - begin);
     return lazy_string(shp_data_s, this->begin + begin, length);
 }
 
@@ -35,25 +36,25 @@ std::ostream &operator<<(std::ostream &os, lazy_string &ls) {
     return os;
 }
 
-const char &lazy_string::at(unsigned pos) const{
+char lazy_string::at(unsigned pos) const{
     if (pos >= length) {
         throw std::out_of_range("lazy_string");
     }
     return shp_data_s->at(begin + pos);
 }
 
-char &lazy_string::at(unsigned pos) {
+lazy_string::my_char lazy_string::at(unsigned pos) {
     if (pos >= length) {
         throw std::out_of_range("lazy_string");
     }
-    return shp_data_s->at(begin + pos);
+    return my_char(this, begin + pos);
 }
 
-const char &lazy_string::operator[](unsigned pos) const{
+char lazy_string::operator[](unsigned pos) const{
     return at(pos);
 }
 
-char &lazy_string::operator[](unsigned pos){
+lazy_string::my_char lazy_string::operator[](unsigned pos){
     return at(pos);
 }
 
@@ -62,4 +63,23 @@ lazy_string::operator std::string() const{
 }
 unsigned lazy_string::get_length() {
     return length;
+}
+
+lazy_string::my_char::my_char(lazy_string *const ls, unsigned pos): ls(ls), pos(pos){}
+
+lazy_string::my_char &lazy_string::my_char::operator=(char ch) {
+    if (ls->shp_data_s.use_count() > 1) {
+        std::string str = ls->shp_data_s->substr(ls->begin, ls->length);
+        ls->shp_data_s = std::make_shared<std::string>(str);
+    }
+    ls->shp_data_s->at(pos) = ch;
+    return *this;
+}
+lazy_string::my_char &lazy_string::my_char::operator=(lazy_string::my_char my_ch) {
+    char ch = my_ch;
+    return *this = ch;
+}
+
+lazy_string::my_char::operator char() const {
+    return ls->shp_data_s->at(pos);
 }
